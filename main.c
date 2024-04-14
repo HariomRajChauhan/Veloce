@@ -54,7 +54,7 @@ void Welcome()
         exit(0);
     default:
         printf("Invalid choice. Please try again.\n");
-        Welcome(); // Restart the welcome screen
+        Welcome();
     }
     }
 
@@ -98,13 +98,13 @@ int Login()
         {
             fclose(fptr);
             printf("Login successful.\n");
-            return 1; // Login successful
+            return 1;
         } 
     }
 
     fclose(fptr);
     printf("Login failed.\n");
-    return 0; // Login failed
+    return 0; 
 }
 
 void CreateRepository(const char *repositoryName)
