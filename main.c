@@ -13,7 +13,7 @@ struct login
 void Register()
 {
     FILE *fptr;
-    fptr = fopen("login.txt", "a+");
+    fptr = fopen("login.txt", "a");
     if (fptr == NULL)
     {
         printf("Error!");
@@ -23,7 +23,7 @@ void Register()
     scanf("%s", l.username);
     printf("Enter the password: ");
     scanf("%s", l.password);
-    fprintf(fptr, "%s\n%s", l.username, l.password);
+    fprintf(fptr, "%s\n%s\n", l.username, l.password);
     fclose(fptr);
 }
 
