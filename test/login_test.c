@@ -3,6 +3,7 @@
 #include <stdlib.h>
 
 struct login {
+    
     char username[50];
     char password[50];
 };
