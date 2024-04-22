@@ -73,11 +73,7 @@ void Register()
     scanf("%s", l.username);
     printf("Enter the password: ");
     scanf("%s", l.password);
-<<<<<<< HEAD
-    fprintf(fptr, "%s\n%s\n", l.username, l.password);
-=======
     fprintf(fptr, "%s %s\n", l.username, l.password);
->>>>>>> 06b8a85c0cc7e1586d0e11a313bc466e64e9781a
     fclose(fptr);
 }
 
