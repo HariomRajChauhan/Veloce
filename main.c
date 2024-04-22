@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #define MAX_FILENAME_LENGTH 100
+
 void Welcome();
 void Register();
 int Login();
@@ -13,7 +14,7 @@ struct Login
 {
     char username[100];
     char password[100];
-}l;
+} l;
 
 int main()
 {
@@ -24,40 +25,39 @@ int main()
 void Welcome()
 {
     int choice;
-    while(1)
+    while (1)
     {
-    printf("Welcome to the Version Control System\n");
-    printf("1. Register\n");
-    printf("2. Login\n");
-    printf("3. Exit\n");
-    printf("Enter your choice: ");
-    scanf("%d", &choice);
+        printf("Welcome to the Version Control System\n");
+        printf("1. Register\n");
+        printf("2. Login\n");
+        printf("3. Exit\n");
+        printf("Enter your choice: ");
+        scanf("%d", &choice);
 
-    switch (choice)
-    {
-    case 1:
-        Register();
-        break;
-    case 2:
-        if (Login())
+        switch (choice)
         {
-            // Successful login, proceed to repository creation
-            CreateRepository("example_repository");
-        }
-        else
-        {
-            printf("Login failed. Exiting...\n");
+        case 1:
+            Register();
+            break;
+        case 2:
+            if (Login())
+            {
+                // Successful login, proceed to repository creation
+                CreateRepository("example_repository");
+            }
+            else
+            {
+                printf("Login failed. Exiting...\n");
+                exit(0);
+            }
+            break;
+        case 3:
             exit(0);
+        default:
+            printf("Invalid choice. Please try again.\n");
+            Welcome();
         }
-        break;
-    case 3:
-        exit(0);
-    default:
-        printf("Invalid choice. Please try again.\n");
-        Welcome();
     }
-    }
-
 }
 
 void Register()
@@ -99,12 +99,12 @@ int Login()
             fclose(fptr);
             printf("Login successful.\n");
             return 1;
-        } 
+        }
     }
 
     fclose(fptr);
     printf("Login failed.\n");
-    return 0; 
+    return 0;
 }
 
 void CreateRepository(const char *repositoryName)
