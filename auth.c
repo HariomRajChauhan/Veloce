@@ -70,9 +70,9 @@ void signup()
     printf("Enter your name: ");
     scanf(" %[^\n]", u.name);
     printf("Enter a security question: ");
-    scanf("%s", u.sec_qstn);
+    scanf(" %s", u.sec_qstn);
     printf("Enter the answer(Make sure you don't forget it, it is the only way to reset your password): ");
-    scanf("%s", u.ans);
+    scanf(" %s", u.ans);
     if (fwrite(&u, sizeof(u), 1, fptr) == 1)
     {
         fclose(fptr);
