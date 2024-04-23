@@ -8,6 +8,8 @@ struct user
     char name[30];
     char username[15];
     char password[50];
+    char sec_qstn[100];
+    char ans[30];
 };
 
 void enter_password(char[]);
@@ -67,12 +69,18 @@ void signup()
     printf("\n");
     printf("Enter your name: ");
     scanf(" %[^\n]", u.name);
+    printf("Enter a security question: ");
+    scanf("%s", u.sec_qstn);
+    printf("Enter the answer(Make sure you don't forget it, it is the only way to reset your password): ");
+    scanf("%s", u.ans);
     if (fwrite(&u, sizeof(u), 1, fptr) == 1)
     {
+        fclose(fptr);
         printf("Creating user succesful");
     }
     else
     {
+        fclose(fptr);
         printf("Failed to create user");
     }
 }
