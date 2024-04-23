@@ -22,6 +22,11 @@ void enter_password(char pwd[])
 
     while ((ch = getch()) != 13 && i < 50)
     {
+        if (ch == '\b')
+        {
+            printf("\b \b");
+            continue;
+        }
         pwd[i++] = ch;
         printf("*");
     }
