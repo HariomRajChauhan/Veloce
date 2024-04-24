@@ -67,6 +67,15 @@ void init(struct repos *r)
         strcpy(filepath, "/");
         strcpy(filepath, filename);
         strcpy(filepath, ".txt");
+        FILE *newfile;
+        newfile = fopen(filepath, "w");
+        if (newfile == NULL)
+        {
+            perror("Error creating file");
+            exit(0);
+        }
+        fprintf(newfile, "");
+        fclose(newfile);
         break;
     }
     strcpy(c.msg, "Initial commit");
