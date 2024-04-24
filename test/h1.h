@@ -1,2 +1,0 @@
-void output();
-void input();
