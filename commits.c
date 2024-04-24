@@ -122,17 +122,17 @@ void create_commit()
 {
     FILE *fptr;
     struct commits c;
-    fptr = fopen(filepath, "r");
+    fptr = fopen(rp->fpath, "r");
     if (fptr == NULL)
     {
         printf("Failed to open the text file!");
-        printf("%s", filepath);
+        printf("%s", rp->fpath);
         exit(0);
     }
     fgets(c.content, sizeof(c.content), fptr);
     fclose(fptr);
     printf("Enter commit message: ");
-    scanf("%s", c.msg);
+    scanf(" %[^\n]", c.msg);
     c.rid = rp->rid;
     random(c.cid);
     fptr = fopen("commits.dat", "ab");
@@ -179,6 +179,57 @@ void view_commits()
 
 void revert_commit()
 {
+    int i = 1, ch;
+    FILE *fptr;
+    struct commits c;
+    fptr = fopen("commits.dat", "rb");
+    if (fptr == NULL)
+    {
+        printf("An unexpected error occured");
+        exit(0);
+    }
+    while (fread(&c, sizeof(c), 1, fptr) == 1)
+    {
+        if (c.rid == rp->rid)
+        {
+            printf("Commit %d\n", i++);
+            printf("Message: %s\n", c.msg);
+            printf("Content: %s\n", c.content);
+            printf("\n");
+        }
+    }
+    fclose(fptr);
+    printf("Enter the commit number you want to revert to: ");
+    scanf("%d", &ch);
+    i = 1;
+    fptr = fopen("commits.dat", "rb");
+    if (fptr == NULL)
+    {
+        printf("An unexpected error occured");
+        exit(0);
+    }
+    while (fread(&c, sizeof(c), 1, fptr) == 1)
+    {
+        if (c.rid == rp->rid)
+        {
+            if (i == ch)
+            {
+                FILE *fptr2;
+                fptr2 = fopen(filepath, "w");
+                if (fptr2 == NULL)
+                {
+                    printf("Failed to open the text file!");
+                    exit(0);
+                }
+                fprintf(fptr2, c.content);
+                fclose(fptr2);
+                break;
+            }
+            i++;
+        }
+    }
+    fclose(fptr);
+    printf("Reverted to commit %d\n", ch);
 }
 
 void comm_home()
