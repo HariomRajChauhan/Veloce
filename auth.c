@@ -13,9 +13,10 @@ struct user
 };
 
 void enter_password(char[]);
-void login(struct user);
+void login();
 void signup();
 void verify_auth();
+void reset_pwd();
 
 void enter_password(char pwd[])
 {
@@ -36,22 +37,58 @@ void enter_password(char pwd[])
     pwd[i] = '\0';
 }
 
-void login(struct user u)
+void reset_pwd()
 {
+    printf("Reset Password?");
+}
+
+void login()
+{
+    int flag = 1, choice;
+    FILE *fptr;
+    struct user u;
+    char uname[50];
+    fptr = fopen("user.dat", "rb+");
+    if (fptr == NULL)
+    {
+        printf("An internal error occured");
+        exit(0);
+    }
     char password[50];
-    printf("Welcome back %s\n", u.name);
-    printf("Please enter your password to continue: ");
+    printf("Enter your username: ");
+    scanf("%s", uname);
+    printf("Password: ");
     enter_password(password);
     printf("\n");
-    if (strcmp(password, u.password) == 0)
+    while (fread(&u, sizeof(u), 1, fptr) == 1)
     {
-        printf("Login Succesful");
+        if (strcmp(password, u.password) == 0 && strcmp(uname, u.username) == 0)
+        {
+            printf("Login Succesful");
+            flag = 0;
+            break;
+        }
     }
-    else
+    fclose(fptr);
+    if (flag)
     {
-        printf("Wrong password entered, press any key to continue");
-        getch();
-        verify_auth();
+        printf("Your credentials don't match any data in our database. Would you like to:\n1)Re-enter password\n2) Reset Password\n3) Back to main menu\nEnter your choice: ");
+        scanf("%d", &choice);
+        switch (choice)
+        {
+        case 1:
+            login();
+            break;
+        case 2:
+            reset_pwd();
+            break;
+        case 3:
+            verify_auth();
+            break;
+        default:
+            login();
+            break;
+        }
     }
 }
 
@@ -70,9 +107,9 @@ void signup()
     printf("Enter your name: ");
     scanf(" %[^\n]", u.name);
     printf("Enter a security question: ");
-    scanf(" %s", u.sec_qstn);
+    scanf(" %[^\n]", u.sec_qstn);
     printf("Enter the answer(Make sure you don't forget it, it is the only way to reset your password): ");
-    scanf(" %s", u.ans);
+    scanf(" %[^\n]", u.ans);
     if (fwrite(&u, sizeof(u), 1, fptr) == 1)
     {
         fclose(fptr);
@@ -87,17 +124,24 @@ void signup()
 
 void verify_auth()
 {
+    int ch;
     system("cls");
-    FILE *fptr;
-    struct user u;
-    fptr = fopen("user.dat", "rb+");
-    if (fptr == NULL)
+    printf("1) Login\n2) Signup\n3) Exit\n");
+    printf("Please enter your choice: ");
+    scanf("%d", &ch);
+    switch (ch)
     {
+    case 1:
+        login();
+        break;
+    case 2:
         signup();
-    }
-    else
-    {
-        fread(&u, sizeof(u), 1, fptr) == 1;
-        login(u);
+        break;
+    case 3:
+        exit(0);
+    default:
+        printf("Enter a valid choice");
+        verify_auth();
+        break;
     }
 }
