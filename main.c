@@ -4,12 +4,36 @@
 #include <stdlib.h>
 #include "vcs.h"
 
+struct user
+{
+    char name[30];
+    char username[15];
+    char password[50];
+    char sec_qstn[100];
+    char ans[30];
+    char uid[17];
+};
+
+struct repos
+{
+    char uid[17];
+    char name[50];
+    char rid[17];
+};
+
 int main()
 {
+    struct user u;
+    struct repos r;
+    int rid;
     system("cls");
     printf("\033[0;35m");
     load();
-    verify_auth();
+    verify_auth(&u);
+    while (1)
+    {
+        repo(u, &r);
+    }
     printf("\033[0m");
     return 0;
 }
