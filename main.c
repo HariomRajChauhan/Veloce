@@ -18,7 +18,9 @@ struct repos
 {
     char uid[17];
     char name[50];
-    char rid[17];
+    int rid;
+    char id[17];
+    int initialized;
 };
 
 int main()
@@ -33,6 +35,7 @@ int main()
     while (1)
     {
         repo(u, &r);
+        comm(r);
     }
     printf("\033[0m");
     return 0;

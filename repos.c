@@ -18,13 +18,15 @@ struct repos
 {
     char uid[17];
     char name[50];
-    char rid[17];
+    int rid;
     char id[17];
+    int initialized;
 };
 
 struct user usr;
+int openflag = 0;
 
-void repo(struct user, int *);
+int repo(struct user, struct repos *);
 void create_repo();
 void view_repos();
 void open_repo();
@@ -41,10 +43,11 @@ void create_repo()
         exit(0);
     }
     printf("Enter repository name: ");
-    scanf(" %s", r.name);
+    scanf(" %[^\n]", r.name);
     printf("Enter an id for your repository. Don't use same id on two repositories to avoid conflicts.");
-    scanf(" %s", r.rid);
+    scanf("%d", &r.rid);
     strcpy(r.uid, usr.uid);
+    r.initialized = 0;
     random(r.id);
     if (fwrite(&r, sizeof(r), 1, fptr) == 1)
     {
@@ -64,7 +67,7 @@ void view_repos()
 
     FILE *fptr;
     struct repos r;
-    fptr = fopen("repos.dat", "ab+");
+    fptr = fopen("repos.dat", "rb");
     if (fptr == NULL)
     {
         printf("An unexpected error occured");
@@ -73,30 +76,35 @@ void view_repos()
     printf("List of all your repositories:\n");
     while (fread(&r, sizeof(r), 1, fptr) == 1)
     {
-        printf("%d\t%s\n", r.rid, r.name);
+        if (strcmp(r.uid, usr.uid) == 0)
+        {
+            printf("%d\t%s\n", r.rid, r.name);
+        }
     }
 }
-void open_repo(int *rid)
+void open_repo(struct repos *rid)
 {
     system("cls");
     FILE *fptr;
     struct repos r;
     int flag = 1;
-    char temp_id[17];
-    fptr = fopen("repos.dat", "ab+");
+    int temp_id;
+    fptr = fopen("repos.dat", "rb");
     if (fptr == NULL)
     {
         printf("An unexpected error occured");
         exit(0);
     }
     printf("Enter the id of the repository you want to open: ");
-    scanf(" %s", temp_id);
+    scanf(" %d", &temp_id);
     while (fread(&r, sizeof(r), 1, fptr) == 1)
     {
-        if (strcmp(temp_id, r.rid) == 0)
+        if (temp_id == r.rid)
         {
             printf("Opening repository %s", r.name);
-            *rid = r.rid;
+            *rid = r;
+            flag = 0;
+            openflag = 1;
             break;
         }
     }
@@ -106,7 +114,7 @@ void open_repo(int *rid)
     }
 }
 
-void repo(struct user u, int *rid)
+int repo(struct user u, struct repos *rid)
 {
     int ch;
     usr = u;
@@ -141,6 +149,10 @@ void repo(struct user u, int *rid)
         default:
             printf("Please enter a valid choice!");
             getch();
+        }
+        if (openflag)
+        {
+            break;
         }
         printf("\nPress any key to continue: ");
         getch();

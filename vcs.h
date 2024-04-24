@@ -7,4 +7,8 @@ void signup();
 void random();
 
 // Repository functions
-void repo();
+int repo();
+
+// Commit functions
+void comm_home();
+void comm();
