@@ -1,8 +1,15 @@
-# Veloce: A Swift Version Control System
+# Veloce: A Version Control System
 
 Veloce is a version control system (VCS) built using C, designed to provide users with a fast and efficient way to manage their projects and codebase. The name "Veloce" is derived from the Italian word "velo" meaning version and "veloce" meaning swift or fast, reflecting its core philosophy of speed and efficiency.
 
 This project was developed as part of the ACES C-Project Demonstration.
+
+## Team Members
+
+- [Kaushal Rijal](https://github.com/kaushalrijal)
+- [Hariom Raj Chauhan](https://github.com/HariomRajChauhan)
+- [Kaushal Kumar Roy](https://github.com/Prashantt6)
+- [Guru Prakash Gupta](https://github.com/satguru117)
 
 ## Features
 
@@ -58,10 +65,3 @@ To clone and build the Veloce code, follow these steps:
 3. **Make Commits:** Track changes to your codebase by creating commits.
 4. **View Commit History:** Understand the evolution of your projects by viewing commit history.
 5. **Revert to Commits:** Roll back changes if needed by reverting to previous commits.
-
-## Team Members
-
-- [Kaushal Rijal](https://github.com/kaushalrijal)
-- [Hariom Raj Chauhan](https://github.com/HariomRajChauhan)
-- [Kaushal Kumar Roy](https://github.com/Prashantt6)
-- [Guru Prakash Gupta](https://github.com/satguru117)
