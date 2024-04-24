@@ -32,10 +32,19 @@ void init();
 void init()
 {
     int ch;
+    char filename[50];
     printf("Initialize repository first to create commits\n");
-    printf("1) Init existing file\n 2) Create new file\n");
+    printf("1) Init existing file\n2) Create new file\n");
     scanf("%d", &ch);
-    getch();
+    switch (ch)
+    {
+    case 1:
+        printf("Enter filepath of your existing .txt file: ");
+        scanf("%d");
+    case 2:
+        printf("Enter the name of your file: ");
+        scanf("%d");
+    }
 }
 
 // void create_commit()
