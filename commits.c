@@ -64,9 +64,9 @@ void init(struct repos *r)
         }
         strcpy(c.content, "");
         strcpy(filepath, filename);
-        strcpy(filepath, "/");
-        strcpy(filepath, filename);
-        strcpy(filepath, ".txt");
+        strcat(filepath, "/");
+        strcat(filepath, filename);
+        strcat(filepath, ".txt");
         FILE *newfile;
         newfile = fopen(filepath, "w");
         if (newfile == NULL)
@@ -122,16 +122,19 @@ void create_commit()
 {
     FILE *fptr;
     struct commits c;
-    fptr = fopen(filename, "r");
+    fptr = fopen(filepath, "r");
     if (fptr == NULL)
     {
-        perror("Error opening file");
+        printf("Failed to open the text file!");
+        printf("%s", filepath);
         exit(0);
     }
     fgets(c.content, sizeof(c.content), fptr);
     fclose(fptr);
     printf("Enter commit message: ");
     scanf("%s", c.msg);
+    c.rid = rp->rid;
+    random(c.cid);
     fptr = fopen("commits.dat", "ab");
     if (fptr == NULL)
     {
@@ -176,7 +179,6 @@ void view_commits()
 
 void revert_commit()
 {
-    printf("Commit Called");
 }
 
 void comm_home()
@@ -223,6 +225,7 @@ void comm_home()
 void comm(struct repos *r)
 {
     rp = r;
+    strcpy(filename, r->fpath);
     if (r->initialized)
     {
         comm_home();
