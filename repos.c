@@ -21,6 +21,7 @@ struct repos
     int rid;
     char id[17];
     int initialized;
+    char fpath[250];
 };
 
 struct user usr;
@@ -99,7 +100,7 @@ void open_repo(struct repos *rid)
     scanf(" %d", &temp_id);
     while (fread(&r, sizeof(r), 1, fptr) == 1)
     {
-        if (temp_id == r.rid)
+        if (temp_id == r.rid && strcmp(r.uid, usr.uid) == 0)
         {
             printf("Opening repository %s", r.name);
             *rid = r;

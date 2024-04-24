@@ -101,8 +101,8 @@ void reset_pwd()
         printf("No user found with given username.");
 
         getch();
-        verify_auth(user_ptr);
     }
+    verify_auth(user_ptr);
 }
 
 void login(struct user *usr)

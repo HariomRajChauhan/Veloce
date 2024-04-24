@@ -21,6 +21,7 @@ struct repos
     int rid;
     char id[17];
     int initialized;
+    char fpath[250];
 };
 
 int main()
@@ -35,7 +36,7 @@ int main()
     while (1)
     {
         repo(u, &r);
-        comm(r);
+        comm(&r);
     }
     printf("\033[0m");
     return 0;
