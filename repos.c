@@ -43,9 +43,9 @@ void create_repo()
         printf("An unexpected error occured");
         exit(0);
     }
-    printf("Enter repository name: ");
+    printf("Enter repository name:\n>>>\t");
     scanf(" %[^\n]", r.name);
-    printf("Enter an id for your repository. Don't use same id on two repositories to avoid conflicts.");
+    printf("Enter an id for your repository. Don't use same id on two repositories to avoid conflicts.\n>>>\t");
     scanf("%d", &r.rid);
     strcpy(r.uid, usr.uid);
     r.initialized = 0;
@@ -130,7 +130,7 @@ int repo(struct user u, struct repos *rid)
         printf("   \\    /    |  |____ |  `----.|  `--'  | |  `----.|  |____\n");
         printf("    \\__/     |_______||_______| \\______/   \\______||_______|\n");
         printf("--------------------------------------------------------------\n");
-        printf("Welcome %s, how's it going?\n", u.name);
+        printf("\nWelcome %s, how's it going?\n", u.name);
         printf("1) Create a repository\n2) View Repositories\n3) Open Repository\n4) Exit\n");
         printf("Enter your choice: ");
         scanf("%d", &ch);

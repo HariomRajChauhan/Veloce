@@ -30,7 +30,8 @@ int main()
     struct repos r;
     int rid;
     system("cls");
-    printf("\033[0;35m");
+    printf("\033[44m");
+    printf("\033[0;36m");
     load();
     verify_auth(&u);
     while (1)

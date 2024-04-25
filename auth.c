@@ -74,19 +74,19 @@ void reset_pwd()
     }
     int flag = 0;
     char username[15], answer[30], temp_pass[50], ch;
-    printf("Enter your username: ");
+    printf("Enter your username:\n>>>\t");
     scanf("%s", username);
     while (fread(&u, sizeof(u), 1, fptr) == 1)
     {
         if (strcmp(username, u.username) == 0)
         {
             flag = 1;
-            printf("%s\n", u.sec_qstn);
+            printf("%s\n>>>\t", u.sec_qstn);
             scanf("%s", answer);
             if (strcmp(answer, u.ans) == 0)
             {
                 printf("Verification succesful\n");
-                printf("Enter new password: ");
+                printf("Enter new password:\n>>>\t");
                 enter_password(temp_pass);
                 strcpy(u.password, temp_pass);
                 fseek(fptr, -sizeof(u), SEEK_CUR);
@@ -120,9 +120,9 @@ void login(struct user *usr)
         exit(0);
     }
     char password[50];
-    printf("Enter your username: ");
+    printf("Enter your username:\n>>>\t");
     scanf("%s", uname);
-    printf("Password: ");
+    printf("Password:\n>>>\t");
     enter_password(password);
     printf("\n");
     while (fread(&u, sizeof(u), 1, fptr) == 1)
@@ -166,16 +166,16 @@ void signup(struct user *usr)
     struct user u;
     printf("Welcome to Veloce\n");
     printf("Create an accout to get started\n");
-    printf("Enter your username: ");
-    scanf("%s", u.username);
-    printf("Enter your password: ");
+    printf("Enter your username:\n>>>\t");
+    scanf(" %s", u.username);
+    printf("Enter your password:\n>>>\t");
     enter_password(u.password);
     printf("\n");
-    printf("Enter your name: ");
+    printf("Enter your name:\n>>>\t");
     scanf(" %[^\n]", u.name);
-    printf("Enter a security question: ");
+    printf("Enter a security question:\n>>>\t");
     scanf(" %[^\n]", u.sec_qstn);
-    printf("Enter the answer(Make sure you don't forget it, it is the only way to reset your password): ");
+    printf("Enter the answer(Make sure you don't forget it, it is the only way to reset your password):\n>>>\t");
     scanf(" %[^\n]", u.ans);
     random(u.uid);
     if (fwrite(&u, sizeof(u), 1, fptr) == 1)
