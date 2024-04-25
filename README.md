@@ -1,6 +1,6 @@
 # Veloce: A Version Control System
 
-Veloce is a version control system (VCS) built using C, designed to provide users with a fast and efficient way to manage their projects and codebase. The name "Veloce" is derived from the Italian word "velo" meaning version and "veloce" meaning swift or fast, reflecting its core philosophy of speed and efficiency.
+Veloce is a version control system (VCS) built using C, designed to provide users with a fast and efficient way to manage their projects and codebase. The name "Veloce" is derived from the Indonesian word "velo" meaning version and Italian word "veloce" meaning swift or fast, reflecting its core philosophy of speed and efficiency.
 
 This project was developed as part of the ACES C-Project Demonstration.
 
