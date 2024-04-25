@@ -22,6 +22,7 @@ void signup(struct user *);
 void verify_auth(struct user *);
 void reset_pwd();
 char random_char(int);
+void random(char[]);
 
 char random_char(int index)
 {
