@@ -17,7 +17,7 @@ struct repos
 
 struct commits
 {
-    int rid;
+    char rid[17];
     char cid[17];
     char msg[100];
     char content[1000];
@@ -30,7 +30,9 @@ char filepath[250], filename[50];
 void create_commit();
 void view_commits();
 void revert_commit();
-void init();
+void init(struct repos *);
+void comm_home();
+void comm(struct repos *);
 
 void init(struct repos *r)
 {
@@ -52,7 +54,7 @@ void init(struct repos *r)
             perror("Error opening file");
             exit(0);
         }
-        fgets(c.content, sizeof(c.content), fptr);
+        fgets(c.content, 1000, fptr);
         fclose(fptr);
         break;
     case 2:
@@ -85,7 +87,8 @@ void init(struct repos *r)
         perror("Error opening file");
         exit(0);
     }
-    c.rid = r->rid;
+    strcpy(c.rid, r->id); // Set repository id (rid) to the current repository id
+    // c.rid = r->rid;
     random(c.cid);
     if (fwrite(&c, sizeof(c), 1, fptr) == 1)
     {
@@ -122,6 +125,7 @@ void create_commit()
 {
     FILE *fptr;
     struct commits c;
+    char line[256];
     fptr = fopen(rp->fpath, "r");
     if (fptr == NULL)
     {
@@ -129,11 +133,16 @@ void create_commit()
         printf("%s", rp->fpath);
         exit(0);
     }
-    fgets(c.content, sizeof(c.content), fptr);
+    c.content[0] = '\0'; // Clear the content
+    while (fgets(line, sizeof(line), fptr))
+    {
+        strcat(c.content, line); // Append the line to the content
+    }
     fclose(fptr);
     printf("Enter commit message: ");
     scanf(" %[^\n]", c.msg);
-    c.rid = rp->rid;
+    strcpy(c.rid, rp->id); // Set repository id (rid) to the current repository id
+    // c.rid = rp->rid;
     random(c.cid);
     fptr = fopen("commits.dat", "ab");
     if (fptr == NULL)
@@ -166,11 +175,11 @@ void view_commits()
     }
     while (fread(&c, sizeof(c), 1, fptr) == 1)
     {
-        if (c.rid == rp->rid)
+        if (strcmp(c.rid, rp->id) == 0)
         {
             printf("Commit %d\n", i++);
             printf("Message: %s\n", c.msg);
-            printf("Content: %s\n", c.content);
+            printf("Content:\n%s\n", c.content);
             printf("\n");
         }
     }
@@ -190,7 +199,7 @@ void revert_commit()
     }
     while (fread(&c, sizeof(c), 1, fptr) == 1)
     {
-        if (c.rid == rp->rid)
+        if (strcpy(c.rid, rp->id) == 0)
         {
             printf("Commit %d\n", i++);
             printf("Message: %s\n", c.msg);
@@ -210,7 +219,7 @@ void revert_commit()
     }
     while (fread(&c, sizeof(c), 1, fptr) == 1)
     {
-        if (c.rid == rp->rid)
+        if (strcmp(c.rid, rp->id) == 0)
         {
             if (i == ch)
             {
@@ -239,6 +248,14 @@ void comm_home()
     while (1)
     {
         system("cls");
+        printf("--------------------------------------------------------------\n");
+        printf("____    ____  _______  __        ______     ______  _______\n");
+        printf("\\   \\  /   / |   ____||  |      /  __  \\   /      ||   ____|\n");
+        printf(" \\   \\/   /  |  |__   |  |     |  |  |  | |  ,----'|  |__\n");
+        printf("  \\      /   |   __|  |  |     |  |  |  | |  |     |   __|\n");
+        printf("   \\    /    |  |____ |  `----.|  `--'  | |  `----.|  |____\n");
+        printf("    \\__/     |_______||_______| \\______/   \\______||_______|\n");
+        printf("--------------------------------------------------------------\n\n");
         printf("Repository: %s\n", rp->name);
         printf("1. Create commit\n");
         printf("2. View commits\n");
@@ -275,6 +292,7 @@ void comm_home()
 
 void comm(struct repos *r)
 {
+    system("cls");
     rp = r;
     strcpy(filename, r->fpath);
     if (r->initialized)
